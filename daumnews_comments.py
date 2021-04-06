@@ -8,6 +8,7 @@ Type "help", "copyright", "credits" or "license()" for more information.
 >>> from bs4 import BeautifulSoup as bs
 >>> import pandas as pd
 >>> import time
+>>> import csv
 >>> 
 >>> #'중국'으로 검색한 뉴스 목록
 >>> url = 'https://search.daum.net/search?w=news&q=%EC%A4%91%EA%B5%AD&DA=23A&spacing=0'
@@ -53,4 +54,7 @@ Type "help", "copyright", "credits" or "license()" for more information.
 		except:
 			pass
 	time.sleep(3)
-	#크롤링 결과를 보고싶다면 url 10개 로드 후 print(comments_list) 입력
+>>> #크롤링 결과 csv파일로 제작
+>>> cmts = pd.DataFrame(comments_list)
+>>> cmts.head()
+>>> cmts.to_csv('cmts_UTF8.csv', encoding='UTF-8')
