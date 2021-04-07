@@ -44,8 +44,8 @@ for p in range(1,11):
             pass
         time.sleep(2)
         
-        #최대 40개 댓글 크롤링
-        for k in range(40):
+        #최대 5개 댓글 크롤링
+        for k in range(5):
             try:
                 #크롬 개발자도구 이용해 full Xpath 복사
                 comments = driver.find_element_by_xpath('/html/body/div[2]/div[4]/div[2]/div[1]/div[2]/div[4]/div[2]/div/div/div/div[3]/ul[2]/li[' + str(k) + ']/div/p').text
