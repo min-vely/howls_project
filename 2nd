@@ -1,0 +1,48 @@
+from selenium import webdriver
+from time import sleep
+
+driver = webdriver.Chrome(executable_path = r'C:\Users\변정민\Desktop\chromedriver.exe')
+comments_list = []
+likes_list = []
+
+driver.get('https://search.daum.net/search?w=news&q=%EC%A4%91%EA%B5%AD&DA=PGD&spacing=0&p=1')
+count = 1
+page_num = 0
+
+while True:
+    try:
+        if count == 11:
+            if page_num == 5:
+                count = 1
+                page = driver.find_element_by_xpath(f'// *[ @ id = "newsColl"] / div[4] / span / span[2] / a[5]')
+                page.click()
+            else:
+                count = 1
+                page_num += 1
+                page = driver.find_element_by_xpath(f'// *[ @ id = "newsColl"] / div[4] / span / span[2] / a[{page_num}]')
+                page.click()
+            
+            
+        link = driver.find_element_by_xpath(f'//*[@id="clusterResultUL"]/li[{count}]/div[2]/div/span[1]/a')
+        link.click()
+        driver.switch_to.window(driver.window_handles[-1])
+        sleep(3)
+    
+        comment = driver.find_elements_by_class_name('desc_txt.font_size_17')
+        comment = [c.text for c in comment]
+        comments_list.extend(comment)
+        #comments_list = comments_list.replace("\n", " ")
+        
+        like = driver.find_elements_by_class_name('num_txt')
+        like = [n.text for n in like]
+        likes_list.extend(like)
+        #likes_list = likes_list[1::2] #num_txt는 좋아요,싫어요 수가 둘다 나옴, 짝수 번째 인덱스만 추출
+        
+        driver.close()
+        driver.switch_to.window(driver.window_handles[-1])
+        count += 1
+        print(comment, like)
+    except:
+        count += 1
+        #print(comment, like)
+    sleep(3)
